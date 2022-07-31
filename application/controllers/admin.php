@@ -17,9 +17,9 @@ class admin extends CI_Controller {
 	{
 		if($this->kasir->logged_id())	
 		{
-			$data['user']=$this->kasir->user()->num_rows();
-			$data['masakan']=$this->kasir->masakan()->num_rows();
-			$data['transaksi']=$this->kasir->pesanan_admin()->num_rows();
+			$data['user']=$this->kasir->jml_user()->jml_user;
+			$data['masakan']=$this->kasir->jml_masakan()->jml_masakan;
+			$data['transaksi']=$this->kasir->jml_pesanan()->jml_pesanan;
 			$this->load->view('heater/header');
 			$this->load->view('admin/dashboard',$data);
 			$this->load->view('heater/footer');

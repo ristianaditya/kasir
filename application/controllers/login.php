@@ -46,8 +46,7 @@ class login extends CI_Controller {
 				$username = $this->input->post('username', TRUE);
 				$password = $this->input->post('password', TRUE);
              	//checking data via model
-				$checking = $this->kasir->check_login('user', array('username' => $username), array('password' => md5($password)));
-
+				$checking = $this->kasir->check_login($username, $password);
              	//jika ditemukan, maka create session
 				if ($checking != FALSE) {
 					foreach ($checking as $apps) {
@@ -88,6 +87,7 @@ class login extends CI_Controller {
 		}
 
 	}
+	
 	public function logout()
 	{
 		$this->session->sess_destroy();

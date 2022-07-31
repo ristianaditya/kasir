@@ -9,25 +9,14 @@ class kasir extends CI_Model
 		return $this->session->userdata('id_user');
 	}
 
-	function get_all()
+	public function user()
 	{
-		$hasil=$this->db->query("SELECT * FROM level");
-		return $hasil;
-	}
+		return $this->db->get('user');
+	}  
 
-	public function cek_user($data) {
-		$query = $this->db->get_where('user', $data);
-		return $query;
-	}
-
-	function check_login($table, $field1, $field2)
+	function check_login($field1, $field2)
 	{
-		$this->db->select('*');
-		$this->db->from($table);
-		$this->db->where($field1);
-		$this->db->where($field2);
-		$this->db->limit(1);
-		$query = $this->db->get();
+		$query = $this->db->query("CALL validate_login('$field1', '$field2')");
 		if ($query->num_rows() == 0) {
 			return FALSE;
 		} else {
@@ -35,45 +24,38 @@ class kasir extends CI_Model
 		}
 	}
 
-	public function user()
+	public function jml_user()
 	{
-		return $this->db->get('user');
-	}  
-
-	public function transaksi()
-	{
-		return $this->db->get('transaksi');
+		return $this->db->query("SELECT jml_user() as jml_user")->row();
 	}
 
-	public function order()
+	public function jml_masakan()
 	{
-		return $this->db->get('orderan');
+		return $this->db->query("SELECT jml_masakan() as jml_masakan")->row();
 	}
-
-	public function masakan()
+	public function jml_pesanan()
 	{
-		return $this->db->get('masakan');
-	}
-
-	public function detail_order()
-	{
-		return $this->db->get('detail_order');
+		return $this->db->query("SELECT jml_pesanan() as jml_pesanan")->row();
 	}
 
 	// Function Pesanan
 	public function pesanan()
 	{
-		return $this->db->query("SELECT  o.no_meja ,o.id_order, r.nama_masakan, r.harga, r.qty, (r.harga * r.qty) as total_harga FROM orderan o INNER join detail_order r ON o.id_order = r.id_order where o.keterangan = 'selesai' AND o.status_order = 'belum selesai' group by o.id_order");
+		return $this->db->query("SELECT o.no_meja ,o.id_order, m.nama_masakan, m.harga, r.qty, (m.harga * r.qty) AS total_harga FROM orderan o INNER JOIN detail_order r ON o.id_order = r.id_order INNER JOIN masakan m ON r.`id_masakan` = m.`id_masakan` WHERE o.keterangan = 'selesai' AND o.status_order = 'belum selesai' GROUP BY o.id_order");
 	}
 
 	public function pesanan_admin()
 	{
-		return $this->db->query("SELECT  o.no_meja ,o.id_order, r.nama_masakan, r.harga, r.qty, (r.harga * r.qty) as total_harga FROM orderan o INNER join detail_order r ON o.id_order = r.id_order where o.status_order = 'belum selesai' group by o.id_order");
+		return $this->db->query("SELECT o.no_meja ,o.id_order, m.nama_masakan, m.harga, r.qty, (m.harga * r.qty) AS total_harga FROM orderan o INNER JOIN detail_order r ON o.id_order = r.id_order INNER JOIN masakan m ON r.`id_masakan` = m.`id_masakan`
+		where o.status_order = 'belum selesai' GROUP BY o.id_order");
 	}
 
 	public function view_data($id)
 	{
-		return $this->db->query("SELECT  r.id_detail_order, o.tanggal, r.keterangan, o.no_meja ,o.id_order, r.nama_masakan, r.harga, r.qty, (r.harga * r.qty) as total_harga FROM orderan o INNER join detail_order r ON o.id_order = r.id_order where o.status_order = 'belum selesai' AND r.id_order = '$id' ");
+		return $this->db->query("SELECT  r.id_detail_order, o.tanggal, r.keterangan, o.no_meja ,o.id_order, m.nama_masakan, m.harga, r.qty, (m.harga * r.qty) AS total_harga 
+		FROM orderan o INNER JOIN detail_order r ON o.id_order = r.id_order 
+		INNER JOIN masakan m ON r.`id_masakan` = m.`id_masakan`
+		WHERE o.status_order = 'belum selesai' AND r.id_order = '$id'");
 	}
 
 	public function trans($no_meja, $id_order, $tanggal, $total_bayar)
@@ -96,19 +78,6 @@ class kasir extends CI_Model
 	{
 		return $this->db->query("UPDATE detail_order SET status_detail_order = 'selesai' where id_order = '$id_order' ");
 	}
-	//SELECT o.*,sum(r.harga * r.qty) as jumlah FROM orderan o INNER join detail_order r ON o.id_order = r.id_order where o.status_order = 'belum selesai' group by o.id_order
-
-	// public function detail($id_order){
-	// 	return $this->db->query("SELECT o.* FROM detail_order o INNER join orderan r ON o.id_order = r.id_order WHERE r.id_order= '$id_order'");
-	// }
-
-	// SELECT *, sum(transaksi.total_bayar) as jumlah_bayar FROM `orderan` JOIN transaksi WHERE orderan.id_order = transaksi.id_order GROUP BY transaksi.id_order, transaksi.tanggal
-
-	// public function transaksi()
-	// {
-	// 	return $this->db->query("SELECT detail_order.*, transaksi.*, user.*, orderan.*, masakan.* FROM detail_order, transaksi, user, orderan, masakan WHERE detail_order.id_order = transaksi.id_order AND orderan.id_user = user.id_user AND detail_order.id_masakan = masakan.id_masakan	");
-	// }
-
 	// ----	Edit User ----
 
 	public function laporan()
