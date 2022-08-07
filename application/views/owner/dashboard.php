@@ -3,9 +3,6 @@
 		<nav class="sidebar">
 			<ul class="nav">
 				<li><a href="<?= base_url('index.php/owner');?>" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-				<li><a href="<?= base_url('index.php/owner/manage');?>" class=""><i class="lnr lnr-code"></i> <span>Management User</span></a></li>
-				<li><a href="<?= base_url('index.php/owner/masakan');?>" class=""><i class="lnr lnr-chart-bars"></i> <span>Masakan</span></a></li>
-				<li><a href="<?= base_url('index.php/owner/pesanan')?>" class=""><i class="lnr lnr-cog"></i> <span>Pesanan</span></a></li>
 				<li><a href="<?= base_url('index.php/owner/laporan')?>" class=""><i class="fas fa-book"></i> <span>Laporan</span></a></li>
 			</ul>
 		</nav>
