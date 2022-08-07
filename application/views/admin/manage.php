@@ -38,7 +38,6 @@
                             <tr>
                                 <th style="text-align: center;">Id</th>
                                 <th style="text-align: center;">Username</th>
-                                <th style="text-align: center;">Password</th>
                                 <th style="text-align: center;">Nama User</th>
                                 <th style="text-align: center;">Level</th>
                                 <th style="text-align: center;">Action</th>
@@ -52,14 +51,13 @@
                                 $username=$i['username'];
                                 $password=$i['password'];
                                 $nama=$i['nama_user'];
-                                $lvl=$i['id_level'];
+                                $nama_level=$i['nama_level'];
                                 ?>
                                 <tr>
                                     <td style="text-align: center;"><?php echo $no++;?></td>
                                     <td style="text-align: center;"><?php echo $username;?></td>
-                                    <td style="text-align: center;"><?php echo $password;?></td>
                                     <td style="text-align: center;"><?php echo $nama;?></td>
-                                    <td style="text-align: center;"><?php echo $lvl;?></td>
+                                    <td style="text-align: center;"><?php echo $nama_level;?></td>
                                     <td style="text-align: center;"><button type="button" data-toggle="modal" data-target="#modal_edit<?php echo $id?>" class="btn btn-info" style="border-radius: 2px;"><i class="fas fa-pencil-alt ai"></i></button>
                                         <a href="<?php echo base_url('index.php/admin/hapususer/'.$id);?>" title="hapus"><button type="button" class="btn btn-danger" style="border-radius: 2px;"><i class="fas fa-trash-alt ai"></i></button></a>
                                     </td>
@@ -155,9 +153,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3" for="username">Password</label>
+                            <label class="control-label col-md-3" for="username">New Password</label>
                             <div class="col-md-9">
-                                <input type="text" value="<?php echo $password;?>"  class="form-control" name="password" required="">
+                                <input type="password" class="form-control" name="new_password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="username">Confirm Password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" name="confirm_password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -169,7 +173,13 @@
                         <div class="form-group">
                             <label class="control-label col-md-3" for="password">Level</label>
                             <div class="col-md-9">
-                                <input type="text" value="<?php echo $lvl;?>" class="form-control" name="id_level" required="">
+                                <select name="id_level" class="form-control" required>
+                                    <option value="" style="display: none;">--Select akses--</option>
+                                    <option value="1" <?= ($lvl == 1)? "Selected":"";?> >Admin</option>
+                                    <option value="2" <?= ($lvl == 2)? "Selected":"";?>>Waiter</option>
+                                    <option value="3" <?= ($lvl == 3)? "Selected":"";?>>Kasir</option>
+                                    <option value="5" <?= ($lvl == 5)? "Selected":"";?>>Pelanggan</option>
+                                </select>
                             </div>
                         </div>
 

@@ -9,22 +9,18 @@ class Keranjang_model extends CI_Model {
 		return $query->result_array();
 	}
 	
-	public function get_produk_kategori($kategori)
-	{
-		$this->db->where('status_masakan','ready');
-		if($kategori>0)
-		{
-			$this->db->where('kategori',$kategori);
-		}
-		$query = $this->db->get('masakan');
-		return $query->result_array();
-	}
-	
+
 	public function get_kategori_all()
 	{
 		$query = $this->db->get('kategori');
 		return $query->result_array();
 	}
+	public function get_produk_kategori($kategori)
+	{
+		$query = $this->db->query("CALL list_masakan_ready('$kategori')");
+		return $query->result_array();
+	}
+	
 	
 	public  function get_produk_id($id)
 	{

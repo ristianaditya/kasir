@@ -16,9 +16,7 @@ class waiter extends CI_Controller {
 	{
 		if($this->kasir->logged_id())	
 		{
-			$data['user']=$this->kasir->user()->num_rows();
-			$data['masakan']=$this->kasir->masakan()->num_rows();
-			$data['transaksi']=$this->kasir->waiter()->num_rows();
+			$data['transaksi']=$this->kasir->jml_waiter()->jumlah_pesanan;
 
 			$this->load->view('heater/header');
 			$this->load->view('waiter/dashboard',$data);
@@ -30,12 +28,6 @@ class waiter extends CI_Controller {
 
 		}
 
-	}
-
-	public function logout()
-	{
-		$this->session->sess_destroy();
-		redirect('login');
 	}
 
 	public function alldata(){	
@@ -53,8 +45,7 @@ class waiter extends CI_Controller {
 		$total_bayar =$this->input->post('total_bayar');
 
 		if (isset($_POST['submit'])) {
-			$this->kasir->waiter1($id_transaksi, $tanggal, $id_order, $no_meja, $total_bayar);
-			$this->kasir->waiter2($id_transaksi, $tanggal, $id_order, $no_meja, $total_bayar);
+			$this->kasir->waiter1($id_order);
 			$this->load->view('heater/header');
 			redirect('waiter/pesanan');
 			$this->load->view('heater/footer');

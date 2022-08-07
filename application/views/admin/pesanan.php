@@ -28,7 +28,7 @@
                     <hr>
 
                     <select name="id_order" onchange="cek_data()">
-                      <option value="">--- Pilih Meja ---</option>
+                      <option value="" style="display: none;">--- Pilih Meja ---</option>
                       <?php foreach ($pes->result() as $baris): ?>
                         <option value="<?php echo $baris->id_order; ?>"><?php echo $baris->no_meja; ?></option>
                     <?php endforeach; ?>

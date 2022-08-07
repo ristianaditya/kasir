@@ -47,6 +47,7 @@
 						<input class="input100" type="password" name="password">
 						<span class="focus-input100"></span>
 					</div>
+					<a href="http://localhost/kasir/assets/m6_barcode.png" target="_blank">barcode login</a>
 					<?php echo form_error('password'); ?>
 					<div class="flex w-full p-b-48">
 

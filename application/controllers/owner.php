@@ -16,8 +16,8 @@ class owner extends CI_Controller {
 	{
 		if($this->kasir->logged_id())	
 		{
-			$data['user']=$this->kasir->user()->num_rows();
-			$data['masakan']=$this->kasir->masakan()->num_rows();
+			$data['user']=$this->kasir->jml_user()->jml_user;
+			$data['masakan']=$this->kasir->jml_masakan()->jml_masakan;
 			$data['transaksi']=$this->kasir->transaksi()->num_rows();
 			$this->load->view('heater/header');
 			$this->load->view('owner/dashboard',$data);
@@ -124,24 +124,6 @@ class owner extends CI_Controller {
 			echo "Ada Kesalahan saat mengambil data !!!";
 		}
 	}
-
-	// public function cetak()
-	// {
-	// 	$id_transaksi =$this->input->post('id_transaksi');
-	// 	$tanggal =$this->input->post('tanggal');
-	// 	$id_order =$this->input->post('id_order');
-	// 	$no_meja =$this->input->post('no_meja');
-	// 	$total_bayar =$this->input->post('total_bayar');
-	// 	$tanggal1 = $this->input->post('tanggal1');
-	// 	if (isset($_POST['submit'])) {
-	// 		$this->kasir->laporanpenjualan($id_transaksi, $tanggal, $id_order, $no_meja, $total_bayar, $tanggal1);
-	// 		$this->load->view('heater/header');
-	// 		$this->load->view('owner/data1');
-	// 		$this->load->view('heater/footer');
-	// 	}else {
-	// 		echo "Ada Kesalahan saat mengambil data !!!";
-	// 	}
-	// }
 
 	public function s_pesanan()
 	{
@@ -308,7 +290,7 @@ public function laporanpenjualan(){
 	$no_meja =$this->input->post('no_meja');
 	$total_bayar =$this->input->post('total_bayar');
 	$tanggal1 = $this->input->post('tanggal1');
-	$cet = $this->db->query("SELECT * FROM transaksi WHERE tanggal BETWEEN '$tanggal' AND '$tanggal1' ");
+	$cet = $this->db->query("SELECT * FROM transaksi LEFT JOIN orderan ON transaksi.id_order = orderan.id_order WHERE transaksi.tanggal BETWEEN '$tanggal' AND '$tanggal1' ");
 
 	$pdf = new FPDF("P","mm","A4");
 	$pdf->AddPage();
@@ -349,7 +331,7 @@ public function laporanpenjualan(){
 	endforeach;
 	$pdf->Cell(array_sum($w),0,'','T');
 
-	$pdf->Output();
+	return $pdf->Output();
 
 }
 

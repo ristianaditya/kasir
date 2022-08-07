@@ -64,7 +64,7 @@
                                     <td><?php echo $smasakan;?></td>
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#modal_edit<?php echo $id_masakan;?>" class="btn btn-info" style="border-radius: 2px;"><i class="fas fa-pencil-alt ai"></i></button>
-                                        <a href="<?php echo base_url('index.php/admin/hapusmas/'.$id_masakan);?>" title="hapus"><button type="button" class="btn btn-danger" style="border-radius: 2px;"><i class="fas fa-trash-alt ai"></i></button></td>
+                                        <a href="<?php echo base_url('index.php/admin/hapus_masakan/'.$id_masakan);?>" title="hapus"><button type="button" class="btn btn-danger" style="border-radius: 2px;"><i class="fas fa-trash-alt ai"></i></button></td>
                                         </tr>
                                     <?php endforeach;?>
                                 </tbody>
@@ -76,6 +76,7 @@
                 <!-- END PAGE CONTAINER-->
             </div>
         </div>
+
         <!-- POPUP TAMBAH -->
         <div class="modal fade" id="modal_form" role="dialog">
             <div class="modal-dialog">
@@ -84,7 +85,7 @@
                         <h3>Tambah Menu</h3>
                     </div>
                     <div class="modal-body form">
-                        <form action="<?php echo base_url('index.php/admin/gambar')?>" enctype="multipart/form-data" method="post" id="form" class="form-horizontal">
+                        <form action="<?php echo base_url('index.php/admin/tambah_masakan')?>" enctype="multipart/form-data" method="post" id="form" class="form-horizontal">
                             <div class="form-body">
                                 <div class="form-group">
                                     <label class="control-label col-md-3" for="nama">Nama Menu</label>
@@ -111,7 +112,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Gambar</label>
                                     <div class="col-md-9">
-                                        <input type="file" id="gambar" name="gambar">
+                                        <input type="file" id="gambar" name="gambar" required>
                                         <span class="help-block"></span>
                                     </div>
                                 </div>
@@ -120,7 +121,7 @@
                                     <label class="control-label col-md-3">Kategori</label>
                                     <div class="col-md-9">
                                         <select name="kategori" class="form-control" required="">
-                                            <option value="">--Select Kategori--</option>
+                                            <option value="" style="display: none;">--Select Kategori--</option>
                                             <option name="id_level" value="1">Makanan</option>
                                             <option name="id_level" value="2">Minuman</option>
                                         </select>
@@ -132,7 +133,7 @@
                                     <label class="control-label col-md-3">Status Makanan</label>
                                     <div class="col-md-9">
                                         <select name="status_masakan" class="form-control" required="">
-                                            <option value="">--Select Status--</option>
+                                            <option value="" style="display: none;">--Select Status--</option>
                                             <option name="id_level" value="ready">Ready</option>
                                             <option name="id_level" value="belum ready">Belum Ready</option>
                                         </select>
@@ -150,6 +151,7 @@
                 </div>
             </div>
         </div>
+
         <!-- POPUP EDIT -->
         <?php
         foreach($mas->result_array() as $i):
@@ -158,7 +160,7 @@
          $desc = $i['deskripsi'];
          $harga = $i['harga'];
          $gambar = $i['gambar'];
-         $kategori = $i['kategori'];
+         $kategori = $i['id_kategori'];
          $smasakan = $i['status_masakan'];
          ?>
          <div class="modal fade" id="modal_edit<?php echo $id_masakan;?>" role="dialog">
@@ -168,7 +170,7 @@
                        <h3 class="modal-title" id="myModalLabel">Edit Anggota</h3>
                    </div>
                    <div class="modal-body form">
-                    <form action="<?php echo base_url('index.php/admin/egambar')?>" enctype="multipart/form-data" class="form-horizontal" method="post">
+                    <form action="<?php echo base_url('index.php/admin/edit_masakan')?>" enctype="multipart/form-data" class="form-horizontal" method="post">
                         <div class="form-body">
 
                             <div class="form-group" hidden>
@@ -219,7 +221,7 @@
                                 <label class="control-label col-md-3">Kategori</label>
                                 <div class="col-md-9">
                                     <select name="kategori" class="form-control" required="">
-                                        <option value="">--Select Kategori--</option>
+                                        <option value="" style="display: none;">--Select Kategori--</option>
                                         <?php if($kategori=='1'):?>
                                             <option value="1" selected="">Makanan</option>
                                             <option value="2">Minuman</option>
@@ -236,7 +238,7 @@
                                 <label class="control-label col-md-3">Status Makanan</label>
                                 <div class="col-md-9">
                                     <select name="status_masakan" class="form-control" required="">
-                                        <option value="">--Select Status--</option>
+                                        <option value="" style="display: none;">--Select Status--</option>
                                         <?php if($smasakan=='ready'):?>
                                             <option value="ready" selected="">Ready</option>
                                             <option value="belum ready">Belum Ready</option>

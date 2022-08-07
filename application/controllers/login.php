@@ -88,6 +88,45 @@ class login extends CI_Controller {
 
 	}
 	
+	public function api_login(){
+		//get data dari FORM
+		$username = $this->input->get('username', TRUE);
+		$password = $this->input->get('password', TRUE);
+		 //checking data via model
+		$checking = $this->kasir->barcode_login($username, $password);
+		 //jika ditemukan, maka create session
+		if ($checking != FALSE) {
+			foreach ($checking as $apps) {
+
+				$session_data = array(
+					'id_user'   => $apps->id_user,
+					'user_name' => $apps->username,
+					'user_pass' => $apps->password,
+					'user_nama' => $apps->nama_user,
+					'id_level' => $apps->id_level
+				);
+			 //set session userdata
+				$this->session->set_userdata($session_data);
+				if ($this->session->userdata("id_level") == '1'){
+					redirect('admin');
+				}elseif($this->session->userdata("id_level") == '2'){
+					redirect('waiter');
+				}elseif($this->session->userdata("id_level") == '3'){
+					redirect('kasir1');
+				}elseif($this->session->userdata("id_level") == '4'){
+					redirect('owner');
+				}elseif($this->session->userdata("id_level") == '5'){
+					redirect('pelanggan');
+				}
+			}
+		}else{
+
+			$data['error'] = '<div class="alert alert-danger" style="margin-top: 3px">
+			<div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> username atau password salah!</div></div>';
+			$this->load->view('login', $data);
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->sess_destroy();
