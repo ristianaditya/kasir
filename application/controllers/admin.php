@@ -19,7 +19,7 @@ class admin extends CI_Controller {
 		{
 			$data['user']=$this->kasir->jml_user()->jml_user;
 			$data['masakan']=$this->kasir->jml_masakan()->jml_masakan;
-			$data['transaksi']=$this->kasir->jml_transaksi()->jml_transaksi;
+			$data['transaksi']=$this->kasir->jml_pesanan()->jml_pesanan;
 			$this->load->view('heater/header');
 			$this->load->view('admin/dashboard',$data);
 			$this->load->view('heater/footer');
