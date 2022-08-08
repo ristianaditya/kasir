@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Menu</title>
+	<title>Menu List</title>
 	<link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.css')?>">
 	<link rel="stylesheet" href="<?= base_url('assets\bootstrap4\css/bootstrap.min.css')?>">
 	<link rel="stylesheet" href="<?= base_url('assets\custom.css')?>">
@@ -204,9 +204,18 @@
 			opacity:1;
 			}
 		}
+		.img-thumbnail {
+			padding: 0.25rem;
+			background-color: #fff;
+			border: 1px solid #dee2e6;
+			border-radius: 0.25rem;
+			width: 100%;
+			height: 30vh;
+			/* height: auto; */
+		}
 	</style>
 </head>
-<body style="overflow-x: hidden;">
+<body style="overflow-x: hidden; background-color: #cbd2d9;">
 
 	<!-- navbar baru -->
 	<nav class=" navbar-ctn">

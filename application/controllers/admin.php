@@ -62,7 +62,8 @@ class admin extends CI_Controller {
 		$id_level = $this->input->post('id_level');
 		$id_user = $this->input->post('id_user');
 		
-		$this->kasir->edit_user($username, $new_password, $confirm_password, $nama_user, $id_level, $id_user);
+		$edit = $this->kasir->edit_user($username, $new_password, $confirm_password, $nama_user, $id_level, $id_user)->status;
+		$this->session->set_flashdata('validasi_user', $edit);
 		redirect('admin/manage');
 	}
 

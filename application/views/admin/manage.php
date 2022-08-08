@@ -203,4 +203,38 @@
     </footer>
 </div>
 
+<script src="<?= base_url('assets/sweetalert2.min.js')?>"></script>
+
+<?php 
+    $data = $this->session->flashdata('validasi_user');
+    if ($data == 1)
+        { ?>
+            <script>
+                Swal.fire(
+                    'Peringatan!',
+                    'Password tidak diperbarui!',
+                    'warning'
+                    )
+            </script>
+    <?php  } else if ($data == 2)
+        { ?>
+            <script>
+                Swal.fire(
+                    'Berhasil!',
+                    'Data user berhasil diperbarui!',
+                    'success'
+                    )
+            </script>
+    <?php  } else
+        { ?>
+            <script>
+                Swal.fire(
+                    'Error',
+                    'Password yang anda masukan tidak sesuai',
+                    'error'
+                    )
+            </script>
+    <?php  } ?>
+
+
 
